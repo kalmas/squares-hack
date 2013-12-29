@@ -25,27 +25,27 @@ public class PieceSequence {
 	
 	public void add(Piece piece) {
 		pieces.add(piece);
-		
-		int length = pieces.size();
-		System.out.println(length);
-		if(length == 9){
-			System.out.print(draw());
-			throw new RuntimeException();
-		}
 	}
 	
+	/**
+	 * Determine if given piece can be played at this position
+	 */
 	public boolean pieceIsPlayable(Piece piece){
 		int count = pieces.size();
 		switch(count){
 			case 0:
+				// Anything can be played in the first position
 				return true;
 			case 1:
 			case 2:
+				// Second two positions must match piece to the left
 				return pieces.get(count - 1).canBeToTheWestOf(piece);
 			case 3:
 			case 6:
+				// Third and sixth positions must match piece above
 				return pieces.get(count - 3).canBeToTheNorthOf(piece);
 			default:
+				// Other positions must match the piece to the left and the piece above
 				return (pieces.get(count - 1).canBeToTheWestOf(piece)
 						&& pieces.get(count - 3).canBeToTheNorthOf(piece));
 		}
@@ -58,6 +58,10 @@ public class PieceSequence {
 		}
 		
 		return drawing;
+	}
+	
+	public int size(){
+		return pieces.size();
 	}
 
 }

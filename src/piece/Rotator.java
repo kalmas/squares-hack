@@ -11,6 +11,9 @@ public class Rotator {
 	static final int ONE_EIGHTY = 180;
 	static final int TWO_SEVENTY = 270;
 	
+	/**
+	 * Make a list of pieces, each representing a different orientation of the original piece
+	 */
 	public List<Piece> getRotations(Piece original){
 		List<Piece> pieces = new ArrayList<Piece>();
 		Design[] originalDesigns = original.getDesigns();
@@ -24,6 +27,9 @@ public class Rotator {
 		return pieces;
 	}
 	
+	/**
+	 * Move each design over one to represent a 90 degree rotation
+	 */
 	private Design[] slideOnce(Design[] original){
 		Design[] slided = new Design[4];
 		slided[0] = original[3];

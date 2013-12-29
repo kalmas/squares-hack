@@ -14,51 +14,38 @@ import piece.Rotator;
 
 public class SquaresSolver {
 
-	/**
-	 * @param args
-	 * @throws Exception 
-	 */
 	public static void main(String[] args) throws Exception {
+		
+		// Build a list of the physical pieces we have to play with
 		List<Piece> pieces = new ArrayList<Piece>();
+		pieces.add(new Piece("A", 0, new Golden(Design.REAR), new Black(Design.REAR), new Yellow(Design.REAR), new Chocolate(Design.REAR)));
+		pieces.add(new Piece("B", 0, new Golden(Design.FRONT), new Black(Design.FRONT), new Yellow(Design.FRONT), new Chocolate(Design.REAR)));
+		pieces.add(new Piece("C", 0, new Chocolate(Design.FRONT), new Golden(Design.FRONT), new Yellow(Design.FRONT), new Black(Design.REAR)));
+		pieces.add(new Piece("D", 0, new Chocolate(Design.FRONT), new Yellow(Design.REAR), new Black(Design.FRONT), new Golden(Design.FRONT)));
+		pieces.add(new Piece("E", 0, new Golden(Design.REAR), new Black(Design.FRONT), new Yellow(Design.FRONT), new Chocolate(Design.REAR)));
+		pieces.add(new Piece("F", 0, new Golden(Design.FRONT), new Black(Design.REAR), new Yellow(Design.REAR), new Chocolate(Design.FRONT)));
+		pieces.add(new Piece("G", 0, new Yellow(Design.FRONT), new Golden(Design.FRONT), new Chocolate(Design.FRONT), new Black(Design.FRONT)));
+		pieces.add(new Piece("H", 0, new Golden(Design.FRONT), new Black(Design.FRONT), new Yellow(Design.REAR), new Chocolate(Design.FRONT)));
+		pieces.add(new Piece("I", 0, new Yellow(Design.FRONT), new Black(Design.FRONT), new Chocolate(Design.FRONT), new Golden(Design.REAR)));
 		
-		Design g1 = new Golden(Design.FRONT);
-		Design g2 = new Golden(Design.REAR);
-		Design b1 = new Black(Design.FRONT);
-		Design b2 = new Black(Design.REAR);
-		Design y1 = new Yellow(Design.FRONT);
-		Design y2 = new Yellow(Design.REAR);
-		Design c1 = new Chocolate(Design.FRONT);
-		Design c2 = new Chocolate(Design.REAR);
-		
-		pieces.add(new Piece("A", 0, g2, b2, y2, c2));
-		pieces.add(new Piece("B", 0, g1, b1, y1, c2));
-		// pieces.add(new Piece("Z", 0, g1, b1, y1, c2));
-		pieces.add(new Piece("C", 0, c1, g1, y1, b2));
-		pieces.add(new Piece("D", 0, c1, y2, b1, g1));
-		pieces.add(new Piece("E", 0, g2, b1, y1, c2));
-		pieces.add(new Piece("F", 0, g1, b2, y2, c1));
-		pieces.add(new Piece("G", 0, y1, g1, c1, b1));
-		pieces.add(new Piece("H", 0, g1, b1, y2, c1));
-		pieces.add(new Piece("I", 0, y1, b1, c1, g2));
-		
+		// Now make a list of all the possible ways a piece may be represented
+		// i.e. 4 representations per piece, one for each possible orientation
 		List<Piece> representations = new ArrayList<Piece>();
 		Rotator rotator = new Rotator();
-		
 		for(Piece piece : pieces){
 			List<Piece> rotations = rotator.getRotations(piece);
 			representations.addAll(rotations);
 		}
 		
+		// Start with an empty sequence of pieces, representing an empty table
 		PieceSequence sequence = new PieceSequence();
+		
+		// Our diligent player will solve the puzzle
 		Player kyle = new Player();
-		kyle.play(sequence, representations);
 		
-		System.out.println("Done");
-
+		PieceSequence winningCombo = kyle.play(sequence, representations);
 		
-		
-
+		System.out.println("Solved it in " + Player.tries + " tries:");
+		System.out.print(winningCombo.draw());
 	}
-
-
 }
