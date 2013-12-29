@@ -14,11 +14,12 @@ public class Rotator {
 	public List<Piece> getRotations(Piece original){
 		List<Piece> pieces = new ArrayList<Piece>();
 		Design[] originalDesigns = original.getDesigns();
+		String origin = original.getOrigin();
 		
-		pieces.add(new Piece(originalDesigns));
-		pieces.add(new Piece(rotateNinety(originalDesigns)));
-		pieces.add(new Piece(rotateOneEighty(originalDesigns)));
-		pieces.add(new Piece(rotateTwoSeventy(originalDesigns)));
+		pieces.add(new Piece(origin, 0, originalDesigns));
+		pieces.add(new Piece(origin, 1, rotateNinety(originalDesigns)));
+		pieces.add(new Piece(origin, 2, rotateOneEighty(originalDesigns)));
+		pieces.add(new Piece(origin, 3, rotateTwoSeventy(originalDesigns)));
 		
 		return pieces;
 	}

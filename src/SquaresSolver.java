@@ -8,6 +8,7 @@ import design.Yellow;
 import design.Chocolate;
 
 import piece.Piece;
+import piece.PieceSequence;
 import piece.Rotator;
 
 
@@ -20,19 +21,25 @@ public class SquaresSolver {
 	public static void main(String[] args) throws Exception {
 		List<Piece> pieces = new ArrayList<Piece>();
 		
-		Design goldenFront = new Golden(Design.FRONT);
-		Design goldenRear = new Golden(Design.REAR);
-		Design blackFront = new Black(Design.FRONT);
-		Design blackRear = new Black(Design.REAR);
-		Design yellowFront = new Yellow(Design.FRONT);
-		Design yellowRear = new Yellow(Design.REAR);
-		Design chocolateFront = new Chocolate(Design.FRONT);
-		Design chocolateRear = new Chocolate(Design.REAR);
+		Design g1 = new Golden(Design.FRONT);
+		Design g2 = new Golden(Design.REAR);
+		Design b1 = new Black(Design.FRONT);
+		Design b2 = new Black(Design.REAR);
+		Design y1 = new Yellow(Design.FRONT);
+		Design y2 = new Yellow(Design.REAR);
+		Design c1 = new Chocolate(Design.FRONT);
+		Design c2 = new Chocolate(Design.REAR);
 		
-		pieces.add(new Piece(goldenRear, blackRear, yellowRear, chocolateRear));
-		pieces.add(new Piece(goldenFront, blackFront, yellowFront, chocolateRear));
-		pieces.add(new Piece(chocolateFront, goldenFront, yellowFront, blackRear));
-		pieces.add(new Piece(chocolateFront, yellowRear, blackFront, goldenFront));
+		pieces.add(new Piece("A", 0, g2, b2, y2, c2));
+		pieces.add(new Piece("B", 0, g1, b1, y1, c2));
+		// pieces.add(new Piece("Z", 0, g1, b1, y1, c2));
+		pieces.add(new Piece("C", 0, c1, g1, y1, b2));
+		pieces.add(new Piece("D", 0, c1, y2, b1, g1));
+		pieces.add(new Piece("E", 0, g2, b1, y1, c2));
+		pieces.add(new Piece("F", 0, g1, b2, y2, c1));
+		pieces.add(new Piece("G", 0, y1, g1, c1, b1));
+		pieces.add(new Piece("H", 0, g1, b1, y2, c1));
+		pieces.add(new Piece("I", 0, y1, b1, c1, g2));
 		
 		List<Piece> representations = new ArrayList<Piece>();
 		Rotator rotator = new Rotator();
@@ -42,9 +49,12 @@ public class SquaresSolver {
 			representations.addAll(rotations);
 		}
 		
-		for(Piece piece : representations) {
-			System.out.println(piece.draw());
-		}
+		PieceSequence sequence = new PieceSequence();
+		Player kyle = new Player();
+		kyle.play(sequence, representations);
+		
+		System.out.println("Done");
+
 		
 		
 
